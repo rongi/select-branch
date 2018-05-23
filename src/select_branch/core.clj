@@ -1,19 +1,23 @@
 (ns select-branch.core
   (:gen-class :main true)
   (:require [clojure.java.io :as io]
-            [clojure.java.shell :as sh]))
+            [clojure.java.shell :as sh]
+            [clojure.string :as str :refer [trim replace]]))
 
 (defn get-branches []
   (let [cmd ["git" "branch"]
         proc (.exec (Runtime/getRuntime) (into-array cmd))]
     (with-open [rdr (io/reader (.getInputStream proc))]
-      (doseq [line (line-seq rdr)]
-        (println line)))))
+      (doall (line-seq rdr)))))
+
+(defn parse-branches [branches]
+  (->> branches
+       (map #(trim %))
+       (map #(str/replace % "*" ""))))
 
 (defn run-app [get-branches]
-  (get-branches))
+  (parse-branches (get-branches)))
 
-; & creates a list of var-args
 (defn -main [& args]
   (run-app
     get-branches))

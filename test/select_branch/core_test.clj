@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [select-branch.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest parse-branches-test
+  (is (=
+        (parse-branches '(" aaa " " bbb " "*main"))
+        '("aaa" "bbb" "main"))))
