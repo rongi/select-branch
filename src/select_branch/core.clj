@@ -2,7 +2,8 @@
   (:gen-class :main true)
   (:require [clojure.java.io :as io]
             [clojure.java.shell :as sh]
-            [clojure.string :as str :refer [trim replace]]))
+            [clojure.string :as str :refer [trim replace]]
+            [select-branch.util :refer [first-index]]))
 
 (defn get-branches []
   (let [cmd ["git" "branch"]
@@ -10,10 +11,15 @@
     (with-open [rdr (io/reader (.getInputStream proc))]
       (doall (line-seq rdr)))))
 
-(defn parse-branches [branches]
-  (->> branches
-       (map #(trim %))
-       (map #(str/replace % "*" ""))))
+(defn parse-branches [branches-string]
+  (do
+    (let [branches (->> branches-string
+                        (map #(trim %))
+                        (map #(str/replace % "*" "")))
+          current-branch-index (->> branches-string
+                                    (first-index #(.contains % "*")))]
+      {:branches branches :current current-branch-index})
+    ))
 
 (defn run-app [get-branches]
   (parse-branches (get-branches)))
