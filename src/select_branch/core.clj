@@ -3,7 +3,8 @@
   (:require [clojure.java.io :as io]
             [clojure.java.shell :as sh]
             [clojure.string :as str :refer [trim replace]]
-            [select-branch.util :refer [first-index]]))
+            [select-branch.util :refer [first-index]]
+            [select-branch.console :as console]))
 
 (defn get-branches []
   (let [cmd ["git" "branch"]
@@ -25,6 +26,7 @@
   (parse-branches (get-branches)))
 
 (defn -main [& args]
+  (console/run-app)
   (run-app
     get-branches))
 
