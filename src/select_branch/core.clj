@@ -6,7 +6,7 @@
             [select-branch.util :refer [first-index]]
             [select-branch.ui :as ui]))
 
-(defn get-branches []
+(defn get-branches-string []
   (let [cmd ["git" "branch"]
         proc (.exec (Runtime/getRuntime) (into-array cmd))]
     (with-open [rdr (io/reader (.getInputStream proc))]
@@ -28,7 +28,7 @@
 (defn -main [& args]
   (ui/create-lanterna-view)
   (run-app
-    get-branches))
+    get-branches-string))
 
 ;(if-not (empty? args)
 ;  ; Foreach arg, print the arg...
