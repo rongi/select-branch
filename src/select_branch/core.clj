@@ -4,7 +4,7 @@
             [clojure.java.shell :as sh]
             [clojure.string :as str :refer [trim replace]]
             [select-branch.util :refer [first-index]]
-            [select-branch.console :as console]))
+            [select-branch.ui :as ui]))
 
 (defn get-branches []
   (let [cmd ["git" "branch"]
@@ -26,7 +26,7 @@
   (parse-branches (get-branches)))
 
 (defn -main [& args]
-  (console/run-app)
+  (ui/create-lanterna-view)
   (run-app
     get-branches))
 

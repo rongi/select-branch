@@ -1,4 +1,4 @@
-(ns select-branch.console
+(ns select-branch.ui
   (:import (com.googlecode.lanterna.terminal DefaultTerminalFactory)
            (com.googlecode.lanterna.screen TerminalScreen)
            (com.googlecode.lanterna.gui2 Panel GridLayout Label BasicWindow MultiWindowTextGUI ActionListBox EmptyWindowDecorationRenderer)
@@ -6,11 +6,11 @@
            (com.googlecode.lanterna.graphics SimpleTheme)))
 
 
-(def ^TextColor white (TextColor$RGB. 0xFF 0xFF 0xFF))
-(def ^TextColor black (TextColor$ANSI/BLACK))
-(def ^TextColor selectedTextColor (TextColor$RGB. 0x42 0xB9 0x3D))
+(def ^:private ^TextColor white (TextColor$RGB. 0xFF 0xFF 0xFF))
+(def ^:private ^TextColor black (TextColor$ANSI/BLACK))
+(def ^:private ^TextColor selectedTextColor (TextColor$RGB. 0x42 0xB9 0x3D))
 
-(defn run-app []
+(defn create-lanterna-view []
   (let [terminal (.createTerminal (-> (DefaultTerminalFactory.)
                                       (.setForceTextTerminal false)))
         screen (TerminalScreen. terminal)
@@ -40,5 +40,5 @@
                   (.setWindowDecorationRenderer (EmptyWindowDecorationRenderer.))
                   (.setWindowPostRenderer nil))
         _ (.setTheme gui theme)
-        ]
-    (.addWindowAndWait gui window)))
+        _ (.addWindowAndWait gui window)]
+    (:list-box list-box)))
