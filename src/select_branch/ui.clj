@@ -2,7 +2,7 @@
   (:import (com.googlecode.lanterna.terminal DefaultTerminalFactory)
            (com.googlecode.lanterna.screen TerminalScreen)
            (com.googlecode.lanterna.gui2 Panel GridLayout Label BasicWindow MultiWindowTextGUI ActionListBox EmptyWindowDecorationRenderer)
-           (com.googlecode.lanterna TerminalSize TextColor$ANSI SGR TextColor$RGB TextColor)
+           (com.googlecode.lanterna TerminalSize TextColor$ANSI TextColor$RGB TextColor)
            (com.googlecode.lanterna.graphics SimpleTheme)))
 
 
@@ -16,9 +16,7 @@
         screen (TerminalScreen. terminal)
         _ (.startScreen screen)
         list-size (TerminalSize. 14 10)
-        list-box (-> (ActionListBox. list-size)
-                     (.addItem "Item1" (reify Runnable (run [_])))
-                     (.addItem "Item2" (reify Runnable (run [_]))))
+        list-box (ActionListBox. list-size)
         panel (->
                 (Panel.)
                 (.setLayoutManager (GridLayout. 1))
