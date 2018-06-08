@@ -4,5 +4,5 @@
 
 (deftest parse-branches-test
   (is (=
-        (parse-branches '(" aaa " " bbb " "*main"))
-        {:branches '("aaa" "bbb" "main") :current 2})))
+        (parse-branches '("  aaa " "  bbb " "* master"))
+        {:branches '("aaa" "bbb" "master") :current 2})))

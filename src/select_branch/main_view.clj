@@ -11,6 +11,6 @@
 (defn render
   [view view-model]
   (rx/on-value view-model
-               (-> (:list-box view)
-                   (.addItem "Item1" (reify Runnable (run [_])))
-                   (.addItem "Item2" (reify Runnable (run [_]))))))
+               (fn [branches]
+                 (doseq [branch branches]
+                   (.addItem (:list-box view) branch (reify Runnable (run [_])))))))
