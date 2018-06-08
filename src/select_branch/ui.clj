@@ -20,7 +20,8 @@
         panel (->
                 (Panel.)
                 (.setLayoutManager (GridLayout. 1))
-                (.addComponent (Label. "Label"))
+                (.addComponent (Label. "Branches"))
+                (.addComponent (Label. ""))
                 (.addComponent list-box))
         window (BasicWindow.)
         _ (.setHints window (list Window$Hint/NO_DECORATIONS Window$Hint/NO_POST_RENDERING))
@@ -39,5 +40,7 @@
                   (.setWindowDecorationRenderer (EmptyWindowDecorationRenderer.))
                   (.setWindowPostRenderer nil))
         _ (.setTheme gui theme)
+        _ (.addWindow gui window)
         _ (on-gui-created {:list-box list-box})
-        _ (.addWindowAndWait gui window)]))
+        _ (.waitUntilClosed window)
+        ]))

@@ -13,4 +13,5 @@
   (rx/on-value view-model
                (fn [branches]
                  (doseq [branch branches]
-                   (.addItem (:list-box view) branch (reify Runnable (run [_])))))))
+                   (.addItem (:list-box view) branch (reify Runnable (run [_]))))
+                 (.takeFocus (:list-box view)))))
