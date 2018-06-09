@@ -1,14 +1,14 @@
 (ns select-branch.ui
   (:import (com.googlecode.lanterna.terminal DefaultTerminalFactory)
            (com.googlecode.lanterna.screen TerminalScreen)
-           (com.googlecode.lanterna.gui2 Panel GridLayout Label BasicWindow Window$Hint MultiWindowTextGUI ActionListBox EmptyWindowDecorationRenderer MultiWindowTextGUI TextGUIThread)
-           (com.googlecode.lanterna TerminalSize TextColor$ANSI TextColor$RGB TextColor)
+           (com.googlecode.lanterna.gui2 Panel GridLayout Label BasicWindow Window$Hint MultiWindowTextGUI ActionListBox EmptyWindowDecorationRenderer MultiWindowTextGUI TextGUIThread TextBox)
+           (com.googlecode.lanterna TerminalSize TextColor$ANSI TextColor$RGB TextColor TextColor$Indexed)
            (com.googlecode.lanterna.graphics SimpleTheme)))
 
 
-(def ^:private ^TextColor white (TextColor$RGB. 0xFF 0xFF 0xFF))
+(def ^:private ^TextColor white (TextColor$Indexed/fromRGB 0xFF 0xFF 0xFF))
 (def ^:private ^TextColor black (TextColor$ANSI/BLACK))
-(def ^:private ^TextColor selectedTextColor (TextColor$RGB. 0x42 0xB9 0x3D))
+(def ^:private ^TextColor selectedBackgroundColor (TextColor$Indexed/fromRGB 0x42 0xB9 0x3D))
 
 (defn start-gui [on-gui-created]
   (let [terminal (.createTerminal (-> (DefaultTerminalFactory.)
@@ -20,7 +20,7 @@
         panel (->
                 (Panel.)
                 (.setLayoutManager (GridLayout. 1))
-                (.addComponent (Label. "Branches"))
+                (.addComponent (TextBox.))
                 (.addComponent (Label. ""))
                 (.addComponent list-box))
         window (BasicWindow.)
@@ -29,13 +29,13 @@
 
         gui (MultiWindowTextGUI. screen white)
         theme (-> (SimpleTheme/makeTheme
-                    true
+                    false
                     black
                     white
                     black
                     white
                     black
-                    selectedTextColor
+                    selectedBackgroundColor
                     black)
                   (.setWindowDecorationRenderer (EmptyWindowDecorationRenderer.))
                   (.setWindowPostRenderer nil))
