@@ -42,6 +42,9 @@
         _ (.setTheme gui theme)
         _ (.addWindow gui window)
         _ (.takeFocus list-box)
-        _ (on-gui-created {:list-box list-box})
+        _ (on-gui-created {:list-box list-box :window window})
         _ (.waitUntilClosed window)
+        _ (.stopScreen screen)
+        ; Without this line git response will not print
+        _ (println "")
         ]))

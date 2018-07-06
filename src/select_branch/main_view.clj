@@ -4,7 +4,7 @@
     [beicon.core :as rx])
   (:import
     (io.reactivex Observable)
-    (com.googlecode.lanterna.gui2 ActionListBox)
+    (com.googlecode.lanterna.gui2 ActionListBox Window)
     (io.reactivex.subjects Subject)))
 
 (defn model
@@ -24,5 +24,8 @@
   (rx/on-value
     (:branch-selected view-model)
     (fn [selected-branch]
-      (select-branch selected-branch)
-      (System/exit 0))))
+      (let
+        [git-response (select-branch selected-branch)
+         _ (->> (:window ^Window view) .close)
+         _ (->> git-response (clojure.string/join "\n") print)
+         ]))))
