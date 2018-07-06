@@ -20,7 +20,8 @@
         panel (->
                 (Panel.)
                 (.setLayoutManager (GridLayout. 1))
-                (.addComponent (TextBox.))
+                ;(.addComponent (TextBox.))
+                (.addComponent (Label. "Select branch"))
                 (.addComponent (Label. ""))
                 (.addComponent list-box))
         window (BasicWindow.)
@@ -41,6 +42,7 @@
                   (.setWindowPostRenderer nil))
         _ (.setTheme gui theme)
         _ (.addWindow gui window)
+        _ (.takeFocus list-box)
         _ (on-gui-created {:list-box list-box})
         _ (.waitUntilClosed window)
         ]))

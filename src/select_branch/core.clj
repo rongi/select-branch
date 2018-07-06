@@ -16,14 +16,12 @@
       (doall (line-seq rdr)))))
 
 (defn parse-branches [branches-strings]
-  (do
-    (let [branches (->> branches-strings
-                        (map #(str/replace % "*" ""))
-                        (map str/trim))
-          current-branch-index (->> branches-strings
-                                    (first-index #(.contains % "*")))]
-      {:branches branches :current current-branch-index})
-    ))
+  (let [branches (->> branches-strings
+                      (map #(str/replace % "*" ""))
+                      (map str/trim))
+        current-branch-index (->> branches-strings
+                                  (first-index #(.contains % "*")))]
+    {:branches branches :current current-branch-index}))
 
 (defn- get-branches []
   ^Observable
