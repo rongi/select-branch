@@ -27,5 +27,6 @@
       (let
         [git-response (select-branch selected-branch)
          _ (->> (:window ^Window view) .close)
-         _ (->> git-response (clojure.string/join "\n") print)
+         death-rattle (->> git-response (clojure.string/join "\n"))
+         _ (reset! (:death-rattle view) death-rattle)
          ]))))

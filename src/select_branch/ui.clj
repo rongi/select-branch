@@ -42,9 +42,10 @@
         _ (.setTheme gui theme)
         _ (.addWindow gui window)
         _ (.takeFocus list-box)
-        _ (on-gui-created {:list-box list-box :window window})
+        death-rattle (atom "")
+        _ (on-gui-created {:list-box list-box :window window :death-rattle death-rattle})
         _ (.waitUntilClosed window)
         _ (.stopScreen screen)
-        ; Without this line git response will not print
         _ (println "")
+        _ (println @death-rattle)
         ]))
