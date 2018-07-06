@@ -1,19 +1,15 @@
 (ns select-branch.core
   (:gen-class :main true)
-  (:require [clojure.java.io :as io]
-            [clojure.java.shell :as sh]
-            [clojure.string :as str]
-            [select-branch.util :refer [first-index]]
-            [select-branch.main-view :as main-view]
-            [select-branch.rx-ext :refer [fn->obs]]
-            [select-branch.ui :as ui])
-  (:import (io.reactivex Observable)))
-
-(defn- get-branches-strings []
-  (let [cmd ["git" "branch"]
-        proc (.exec (Runtime/getRuntime) (into-array cmd))]
-    (with-open [rdr (io/reader (.getInputStream proc))]
-      (doall (line-seq rdr)))))
+  (:require
+    [clojure.string :as str]
+    [select-branch.util.util :refer [first-index]]
+    [select-branch.git :refer [read-branches]]
+    [select-branch.main-view :as main-view]
+    [select-branch.util.rx-ext :refer [fn->obs]]
+    [select-branch.ui :as ui])
+  (:import
+    (io.reactivex Observable)
+    (io.reactivex.subjects PublishSubject)))
 
 (defn parse-branches [branches-strings]
   (let [branches (->> branches-strings
@@ -25,13 +21,14 @@
 
 (defn- get-branches []
   ^Observable
-  (fn->obs #(parse-branches (get-branches-strings))))
+  (fn->obs #(parse-branches (read-branches))))
 
 (defn start-view
   [view]
   (let
-    [view-model (main-view/model (get-branches))]
-    (main-view/render view view-model)))
+    [branch-selected (PublishSubject/create)
+     view-model (main-view/model (get-branches) branch-selected)]
+    (main-view/render view view-model branch-selected)))
 
 (defn -main [& args]
   (ui/start-gui start-view))

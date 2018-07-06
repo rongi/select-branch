@@ -5,7 +5,6 @@
            (com.googlecode.lanterna TerminalSize TextColor$ANSI TextColor$RGB TextColor TextColor$Indexed)
            (com.googlecode.lanterna.graphics SimpleTheme)))
 
-
 (def ^:private ^TextColor white (TextColor$Indexed/fromRGB 0xFF 0xFF 0xFF))
 (def ^:private ^TextColor black (TextColor$ANSI/BLACK))
 (def ^:private ^TextColor selectedBackgroundColor (TextColor$Indexed/fromRGB 0x42 0xB9 0x3D))

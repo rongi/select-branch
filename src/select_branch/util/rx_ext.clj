@@ -1,4 +1,4 @@
-(ns select-branch.rx-ext
+(ns select-branch.util.rx-ext
   (:require [beicon.core :as rx])
   (:import (io.reactivex Observable)))
 

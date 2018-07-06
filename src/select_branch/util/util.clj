@@ -1,4 +1,4 @@
-(ns select-branch.util)
+(ns select-branch.util.util)
 
 ; Returns first index of a collection matching given predicate
 (defn first-index [pred coll]

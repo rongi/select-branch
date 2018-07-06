@@ -8,6 +8,14 @@
 (def ^:private threeBranches
   {:branches '("aaa" "bbb" "main") :current 2})
 
+(defn ^:private create-model
+  ([]
+   (create-model (rx/empty)))
+  ([^Observable branch-selected]
+   (model
+     (rx/just threeBranches)
+     branch-selected)))
+
 (defn assert-values
   [^TestObserver testObserver & args]
   (.assertValues testObserver (into-array Object args)))
@@ -17,8 +25,13 @@
   (.test observable))
 
 (deftest model-test
-  (-> threeBranches
-      rx/just
-      model
-      test-observable
-      (assert-values ["aaa" "bbb" "main"])))
+  (testing "populates view"
+    (-> (create-model)
+        :branches
+        test-observable
+        (assert-values ["aaa" "bbb" "main"])))
+  (testing "emits item-selected on item selected"
+    (-> (create-model (rx/just "main"))
+        :branch-selected
+        test-observable
+        (assert-values "main"))))
