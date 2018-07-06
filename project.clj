@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [com.googlecode.lanterna/lanterna "3.0.0"]
                  [funcool/beicon "4.1.0"]]
-  :main select-branch.core)
+  :main select-branch.core
+  :aot [select-branch.core])
